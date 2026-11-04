@@ -1,0 +1,6 @@
+{
+  "name": "Siaga Cepat - Pesta Siaga Kwarcab Kendal 2026",
+  "description": "Aplikasi latihan soal interaktif Siaga Cepat (Cerdas dan Tepat) Pesta Siaga Kwarcab Kendal 2026 dengan navigasi paket soal dinamis, koreksi otomatis, dan panel admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
