@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, BookOpen, Clock, Settings, Shield } from 'lucide-react';
+import { Award, BookOpen, Clock, Settings, Shield, Lock, Unlock } from 'lucide-react';
 
 export type NavTab = 'quiz' | 'kisikisi' | 'history' | 'admin';
 
@@ -7,9 +7,17 @@ interface HeaderProps {
   activeTab: NavTab;
   onSelectTab: (tab: NavTab) => void;
   activePackageCode?: string;
+  isAdminAuthenticated?: boolean;
+  onLogoutAdmin?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, activePackageCode }) => {
+export const Header: React.FC<HeaderProps> = ({
+  activeTab,
+  onSelectTab,
+  activePackageCode,
+  isAdminAuthenticated = false,
+  onLogoutAdmin,
+}) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-900/10 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,11 +37,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, activePa
             </div>
           </div>
 
-          {/* Zone 2: Navigation Links (single line, text with clean active indicator) */}
+          {/* Zone 2: Navigation Links */}
           <nav className="flex items-center gap-1 sm:gap-2 text-sm font-medium text-stone-600 overflow-x-auto py-1 scrollbar-none">
             <button
               onClick={() => onSelectTab('quiz')}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'quiz'
                   ? 'bg-amber-100 text-amber-900 font-semibold'
                   : 'hover:text-amber-900 hover:bg-stone-100/80'
@@ -45,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, activePa
 
             <button
               onClick={() => onSelectTab('kisikisi')}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'kisikisi'
                   ? 'bg-amber-100 text-amber-900 font-semibold'
                   : 'hover:text-amber-900 hover:bg-stone-100/80'
@@ -57,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, activePa
 
             <button
               onClick={() => onSelectTab('history')}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'history'
                   ? 'bg-amber-100 text-amber-900 font-semibold'
                   : 'hover:text-amber-900 hover:bg-stone-100/80'
@@ -69,24 +77,50 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onSelectTab, activePa
 
             <button
               onClick={() => onSelectTab('admin')}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'admin'
                   ? 'bg-amber-800 text-white font-semibold'
                   : 'hover:text-amber-900 hover:bg-stone-100/80'
               }`}
             >
-              <Settings className="w-4 h-4 text-amber-500" />
+              {isAdminAuthenticated ? (
+                <Unlock className="w-4 h-4 text-emerald-400" />
+              ) : (
+                <Lock className="w-4 h-4 text-stone-400" />
+              )}
               <span>Kelola Soal</span>
             </button>
           </nav>
 
-          {/* Zone 3: Primary Action */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Zone 3: Primary Action & Logout */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            {isAdminAuthenticated && activeTab === 'admin' ? (
+              <button
+                onClick={onLogoutAdmin}
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 cursor-pointer flex items-center gap-1"
+                title="Kunci kembali mode admin"
+              >
+                <Lock className="w-3.5 h-3.5 text-stone-500" />
+                <span>Kunci Admin</span>
+              </button>
+            ) : null}
+
             <button
               onClick={() => onSelectTab(activeTab === 'admin' ? 'quiz' : 'admin')}
-              className="px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 bg-stone-900 text-stone-100 hover:bg-stone-800 shadow-xs"
+              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'admin'
+                  ? 'bg-amber-800 text-white hover:bg-amber-900 shadow-xs'
+                  : 'bg-stone-900 text-stone-100 hover:bg-stone-800 shadow-xs'
+              }`}
             >
-              {activeTab === 'admin' ? 'Kembali ke Soal' : 'Mode Admin'}
+              {activeTab === 'admin' ? (
+                'Kembali ke Soal'
+              ) : (
+                <>
+                  <Lock className="w-3 h-3 text-stone-400" />
+                  <span>Mode Admin</span>
+                </>
+              )}
             </button>
           </div>
         </div>

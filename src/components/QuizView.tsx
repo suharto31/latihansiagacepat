@@ -36,8 +36,8 @@ export const QuizView: React.FC<QuizViewProps> = ({
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
-  // Default 40 minutes simulation limit (2400 seconds)
-  const TOTAL_TIME_SECONDS = 40 * 60;
+  // 25 minutes simulation limit (1500 seconds) as requested
+  const TOTAL_TIME_SECONDS = 25 * 60;
 
   // Reset quiz state when package changes
   useEffect(() => {
@@ -49,14 +49,26 @@ export const QuizView: React.FC<QuizViewProps> = ({
     setIsTimerRunning(true);
   }, [quizPackage.id]);
 
-  // Timer effect
+  // Timer effect with auto-submit when 25 minutes are up
   useEffect(() => {
     if (!isTimerRunning) return;
     const interval = setInterval(() => {
-      setSecondsElapsed((prev) => prev + 1);
+      setSecondsElapsed((prev) => {
+        const next = prev + 1;
+        if (quizMode === 'simulation' && next >= TOTAL_TIME_SECONDS) {
+          clearInterval(interval);
+          setIsTimerRunning(false);
+          // Trigger submit automatically when 25 minutes expire
+          setTimeout(() => {
+            handleSubmitQuiz();
+          }, 100);
+          return TOTAL_TIME_SECONDS;
+        }
+        return next;
+      });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isTimerRunning]);
+  }, [isTimerRunning, quizMode]);
 
   const questions = quizPackage.questions;
   const currentQ = questions[currentIndex] || questions[0];
