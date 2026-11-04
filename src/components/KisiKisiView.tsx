@@ -41,7 +41,7 @@ export const KisiKisiView: React.FC<KisiKisiViewProps> = ({ onSelectQuestionNumb
 
           <div className="flex items-center gap-3 shrink-0">
             <a
-              href="/public/assets/aistudio/kisi_kisi_siaga_pintar_b060bdab.pdf"
+              href="./assets/aistudio/kisi_kisi_siaga_pintar_b060bdab.pdf"
               target="_blank"
               rel="noreferrer"
               className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-800 hover:bg-amber-900 text-white shadow-xs transition-colors flex items-center gap-1.5"
