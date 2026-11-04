@@ -15,11 +15,42 @@
   </head>
   <body class="bg-amber-50/40 text-stone-900 font-sans antialiased min-h-screen selection:bg-amber-200 selection:text-amber-900">
     <div id="root">
-      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background-color: #fffdf7; color: #78350f; text-align: center; padding: 24px;">
+      <div id="siaga-initial-loader" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background-color: #fffdf7; color: #78350f; text-align: center; padding: 24px;">
         <div style="width: 48px; height: 48px; border: 4px solid #fef3c7; border-top-color: #92400e; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px;"></div>
         <div style="font-size: 20px; font-weight: 800; color: #451a03; margin-bottom: 6px;">Siaga Cepat Kwarcab Kendal 2026</div>
-        <div style="font-size: 13px; color: #92400e; font-weight: 500;">Memuat bank soal latihan cerdas dan tepat...</div>
-        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+        <div id="siaga-loader-status" style="font-size: 13px; color: #92400e; font-weight: 500;">Memuat bank soal latihan cerdas dan tepat...</div>
+
+        <!-- Fallback troubleshooting panel if script execution fails or takes too long on static hosting -->
+        <div id="siaga-loader-help" style="display: none; margin-top: 24px; max-width: 440px; background: #ffffff; border: 1px solid #fde68a; border-radius: 20px; padding: 20px; text-align: left; box-shadow: 0 10px 25px -5px rgba(120, 53, 15, 0.1); font-size: 13px; color: #451a03;">
+          <div style="font-weight: 800; font-size: 14px; color: #92400e; margin-bottom: 8px;">Tips Pemuatan GitHub Pages:</div>
+          <p style="margin: 0 0 12px 0; line-height: 1.5; color: #78350f; font-size: 12px;">
+            Jika halaman ini terus memuat di GitHub Pages, browser Anda mungkin membuka berkas mentah. Buka versi kompilasi yang sudah siap melalui tombol di bawah:
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+            <a href="./docs/" style="display: inline-block; padding: 8px 14px; background: #92400e; color: #ffffff; font-weight: 700; border-radius: 10px; text-decoration: none; font-size: 12px;">Buka Folder /docs/</a>
+            <a href="./dist/" style="display: inline-block; padding: 8px 14px; background: #047857; color: #ffffff; font-weight: 700; border-radius: 10px; text-decoration: none; font-size: 12px;">Buka Folder /dist/</a>
+            <button onclick="window.location.reload(true)" style="padding: 8px 14px; background: #f5f5f4; color: #292524; font-weight: 600; border-radius: 10px; border: 1px solid #e7e5e4; cursor: pointer; font-size: 12px;">Muat Ulang</button>
+          </div>
+          <div style="font-size: 11px; color: #a16207; background: #fefce8; padding: 8px 10px; border-radius: 8px; border: 1px solid #fef08a;">
+            💡 <strong>Panduan GitHub:</strong> Di GitHub repo Anda, buka <em>Settings &gt; Pages</em> lalu pilih <strong>GitHub Actions</strong> ATAU Branch <strong>main /docs</strong>.
+          </div>
+        </div>
+
+        <style>
+          @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
+
+        <script>
+          // If React does not replace #root within 3.5s, reveal the troubleshooting action
+          setTimeout(function() {
+            var helpEl = document.getElementById('siaga-loader-help');
+            var statusEl = document.getElementById('siaga-loader-status');
+            if (helpEl && document.getElementById('siaga-initial-loader')) {
+              helpEl.style.display = 'block';
+              if (statusEl) statusEl.textContent = 'Pemuatan membutuhkan bantuan penyesuaian GitHub Pages...';
+            }
+          }, 3500);
+        </script>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>

@@ -317,14 +317,22 @@ export default function App() {
 
             <div className="text-xs text-stone-600 space-y-3 leading-relaxed">
               <p>
-                Jika saat di-deploy ke GitHub Pages halaman terlihat blank putih, penyebab utamanya adalah GitHub Pages mencoba menjalankan berkas mentah <code>/src/main.tsx</code> bukannya hasil compile <code>dist/</code>.
+                Jika di GitHub Pages hanya muncul animasi <em>loading</em> terus-menerus atau blank putih, penyebabnya adalah GitHub Pages membuka berkas mentah <code>/src/main.tsx</code> bukannya berkas kompilasi yang siap pakai.
               </p>
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-950 font-medium">
-                <span className="font-bold block mb-1">Cara termudah (Otomatis dengan GitHub Actions):</span>
+
+              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-950 font-medium">
+                <span className="font-bold text-emerald-900 block mb-1">Cara 1 (Paling Mudah &amp; Cepat - Folder /docs):</span>
                 1. Buka Repositori Anda di GitHub.<br />
-                2. Klik tab <strong>Settings</strong> &gt; menu <strong>Pages</strong> (di sebelah kiri).<br />
-                3. Pada bagian <strong>Build and deployment &gt; Source</strong>, pilih <strong>GitHub Actions</strong> (bukan Deploy from a branch).<br />
-                4. Selesai! Berkas <code>.github/workflows/deploy.yml</code> yang sudah dibuat otomatis akan mengompilasi dan menayangkan web secara sempurna.
+                2. Klik <strong>Settings</strong> &gt; menu <strong>Pages</strong>.<br />
+                3. Pada <em>Source</em>: pilih <strong>Deploy from a branch</strong>.<br />
+                4. Pada <em>Branch</em>: pilih <strong>main</strong> (atau <strong>master</strong>) dan pilih folder <strong>/docs</strong> (bukan /root).<br />
+                5. Klik <strong>Save</strong>. Web akan aktif normal dalam hitungan detik!
+              </div>
+
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-950 font-medium">
+                <span className="font-bold text-amber-900 block mb-1">Cara 2 (Otomatis via GitHub Actions):</span>
+                1. Pada <em>Settings &gt; Pages &gt; Source</em>: pilih <strong>GitHub Actions</strong>.<br />
+                2. GitHub akan otomatis menjalankan berkas alur kerja <code>.github/workflows/deploy.yml</code> yang sudah disiapkan untuk mengompilasi folder <code>dist/</code>.
               </div>
             </div>
 
