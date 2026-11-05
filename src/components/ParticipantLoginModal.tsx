@@ -203,7 +203,7 @@ export const ParticipantLoginModal: React.FC<ParticipantLoginModalProps> = ({
                   setPangkalan(e.target.value);
                   if (errorMsg) setErrorMsg('');
                 }}
-                placeholder="Contoh: SDN 1 Pegandon / SD IT Robbi Rodhiya"
+                placeholder="Contoh: SDN 2 Ringinarum/ SD IT Robbi Rodhiya"
                 className="w-full text-xs sm:text-sm pl-9 pr-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-hidden focus:ring-2 focus:ring-amber-800/20 focus:border-amber-800 bg-stone-50/50"
               />
             </div>
