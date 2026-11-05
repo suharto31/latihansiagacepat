@@ -109,15 +109,15 @@ export const paket2Questions: Question[] = [
     elemen: 'PUK Siaga',
     materi: 'Hari Pramuka',
     indikator: 'Disajikan deskripsi tentang peringatan hari pramuka tahun 2026. Dapat mengetahui tema hari pramuka tahun 2026.',
-    soal: 'Tahun 2026 menjadi momentum 65 tahun Gerakan Pramuka membina tunas bangsa. Jiwa pengabdian Pramuka sejalan dengan semangat...',
+    soal: 'Pada peringatan Hari Pramuka ke-65 tahun 2026 yang bertema "Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju Indonesia Emas 2045", program ketahanan strategis nasional yang didukung penuh oleh Pramuka adalah...',
     pilihan: {
-      A: 'Berfoya-foya dan bermalas-malasan',
-      B: 'Ikhlas Bakti Bina Bangsa Berbudi Bawa Laksana',
-      C: 'Mementingkan keuntungan kelompok sendiri',
-      D: 'Meninggalkan kearifan lokal'
+      A: 'Ketergantungan impor beras dan bahan pokok luar negeri',
+      B: 'Swasembada pangan menuju Indonesia Emas 2045',
+      C: 'Pengembangan pertambangan minyak bumi lepas pantai',
+      D: 'Penyediaan kendaraan mewah untuk pejabat organisasi'
     },
     kunci: 'B',
-    pembahasan: 'Motto Gerakan Pramuka "Satyaku kudarmakan, darmaku kubaktikan" serta semboyan "Ikhlas Bakti Bina Bangsa Berbudi Bawa Laksana" senantiasa menjiwai peringatan Hari Pramuka.',
+    pembahasan: 'Tema resmi Hari Pramuka ke-65 Tahun 2026 menegaskan dukungan penuh Gerakan Pramuka terhadap terwujudnya "Swasembada Pangan Menuju Indonesia Emas 2045" melalui pendidikan ketahanan pangan dan pengabdian masyarakat.',
     visualBadge: 'none'
   },
   {

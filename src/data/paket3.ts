@@ -109,15 +109,15 @@ export const paket3Questions: Question[] = [
     elemen: 'PUK Siaga',
     materi: 'Hari Pramuka',
     indikator: 'Disajikan deskripsi tentang peringatan hari pramuka tahun 2026. Dapat mengetahui tema hari pramuka tahun 2026.',
-    soal: 'Nilai utama yang senantiasa diusung dalam setiap peringatan Hari Pramuka untuk anak golongan Siaga adalah...',
+    soal: 'Lanjutan kalimat dari tema resmi peringatan Hari Pramuka ke-65 tahun 2026: "Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju..." adalah...',
     pilihan: {
-      A: 'Mencari hadiah sebanyak-banyaknya',
-      B: 'Membentuk karakter disiplin, mandiri, peduli lingkungan, dan berakhlak mulia',
-      C: 'Mengalahkan barung lain dengan segala cara',
-      D: 'Menghabiskan waktu dengan bermain gadget'
+      A: 'Indonesia Emas 2045',
+      B: 'Generasi Industri Digital 5.0',
+      C: 'Masyarakat Perkotaan Modern',
+      D: 'Pesta Siaga Tingkat Dunia'
     },
-    kunci: 'B',
-    pembahasan: 'Pendidikan kepramukaan Siaga berorientasi pada pembentukan karakter dasar: disiplin, mandiri, ceria, dan peduli sesama.',
+    kunci: 'A',
+    pembahasan: 'Tema lengkap Hari Pramuka ke-65 tahun 2026 adalah "Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju Indonesia Emas 2045". Visi Indonesia Emas 2045 menargetkan bangsa Indonesia menjadi negara maju, makmur, dan berdaulat pangan tepat pada usia 100 tahun kemerdekaan.',
     visualBadge: 'none'
   },
   {

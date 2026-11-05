@@ -49,6 +49,8 @@ Tugas Anda adalah membuat soal pilihan ganda (PG) untuk tingkatan Pramuka Siaga 
 Soal harus mendidik, komunikatif, ramah anak, dan sesuai dengan indikator kisi-kisi berikut.
 
 Tema/Gaya paket yang diinginkan: "${theme || 'Standar Pesta Siaga Kwarcab Kendal 2026'}"
+Catatan Khusus Kisi-Kisi:
+- Untuk Indikator Nomor 7 (Materi Hari Pramuka 2026): Tema resmi Hari Pramuka ke-65 tahun 2026 adalah "Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju Indonesia Emas 2045".
 
 Daftar Indikator yang harus dibuatkan soal:
 ${indicators

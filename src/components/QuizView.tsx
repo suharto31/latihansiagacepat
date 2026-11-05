@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { QuizPackage, OptionKey, QuizSessionResult } from '../types';
+import { QuizPackage, OptionKey, QuizSessionResult, Participant } from '../types';
 import { VisualBadge } from './VisualAssets';
 import {
   ChevronLeft,
@@ -14,18 +14,26 @@ import {
   XCircle,
   AlertTriangle,
   Award,
-  Timer as TimerIcon
+  Timer as TimerIcon,
+  UserCheck,
+  Shield,
+  Clock,
+  Sparkles
 } from 'lucide-react';
 
 interface QuizViewProps {
   quizPackage: QuizPackage;
   onFinishQuiz: (result: QuizSessionResult) => void;
   onSwitchPackage?: () => void;
+  participant: Participant | null;
+  onOpenLoginModal: () => void;
 }
 
 export const QuizView: React.FC<QuizViewProps> = ({
   quizPackage,
   onFinishQuiz,
+  participant,
+  onOpenLoginModal,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, OptionKey>>({});
@@ -151,6 +159,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
       score,
       answers,
       categoryScores,
+      participant: participant || undefined,
     };
 
     onFinishQuiz(sessionResult);
@@ -158,8 +167,127 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
   const progressPercent = Math.round((answeredCount / (questions.length || 1)) * 100);
 
+  // GATEKEEPER: If participant is not yet logged in, show mandatory login screen before starting quiz
+  if (!participant) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/90 shadow-xl text-center relative overflow-hidden">
+          {/* Decorative background accent */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-amber-100/70 via-emerald-50/40 to-transparent rounded-bl-full pointer-events-none" />
+
+          {/* Icon Badge */}
+          <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-900 border border-amber-300 flex items-center justify-center mx-auto mb-5 shadow-sm">
+            <UserCheck className="w-8 h-8 text-amber-800" />
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+            <span>Pesta Siaga Kwarcab Kendal 2026</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight mb-2">
+            Pintu Masuk Latihan: {quizPackage.title}
+          </h1>
+
+          <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto mb-8 leading-relaxed">
+            Sesuai ketentuan latihan Siaga Cepat, adik-adik Siaga wajib mengisi identitas peserta terlebih dahulu agar skor dan piagam penghargaan tercatat atas nama Anda.
+          </p>
+
+          {/* Quick Rules Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl mx-auto mb-8 text-left">
+            <div className="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold text-xs">
+                50
+              </div>
+              <div>
+                <span className="text-xs font-bold text-stone-900 block">50 Butir Soal</span>
+                <span className="text-[11px] text-stone-500">Sesuai indikator kisi-kisi resmi</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold text-xs">
+                25'
+              </div>
+              <div>
+                <span className="text-xs font-bold text-stone-900 block">Waktu 25 Menit</span>
+                <span className="text-[11px] text-stone-500">Koreksi otomatis saat selesai</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center shrink-0 font-bold text-xs">
+                🎖️
+              </div>
+              <div>
+                <span className="text-xs font-bold text-stone-900 block">Cetak Piagam</span>
+                <span className="text-[11px] text-stone-500">Tercetak nama &amp; barung</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Primary Action Button */}
+          <button
+            onClick={onOpenLoginModal}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl text-sm font-bold text-white bg-amber-800 hover:bg-amber-900 shadow-md transition-all flex items-center justify-center gap-2.5 mx-auto cursor-pointer ring-4 ring-amber-800/20"
+          >
+            <UserCheck className="w-5 h-5" />
+            <span>Isi Identitas Peserta &amp; Mulai Mengerjakan</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Participant Active Banner */}
+      <div className="bg-white rounded-2xl p-3.5 sm:p-4 border border-stone-200/90 shadow-2xs mb-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-bold text-white shadow-xs"
+            style={{
+              backgroundColor:
+                participant.warnaBarung === 'merah'
+                  ? '#ef4444'
+                  : participant.warnaBarung === 'kuning'
+                  ? '#eab308'
+                  : participant.warnaBarung === 'biru'
+                  ? '#3b82f6'
+                  : participant.warnaBarung === 'cokelat'
+                  ? '#854d0e'
+                  : participant.warnaBarung === 'putih'
+                  ? '#94a3b8'
+                  : participant.warnaBarung === 'hitam'
+                  ? '#1e293b'
+                  : '#16a34a',
+            }}
+          >
+            <Shield className="w-5 h-5 text-white" />
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-extrabold text-stone-900 truncate">
+                {participant.nama}
+              </span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/80 shrink-0">
+                {participant.barung}
+              </span>
+            </div>
+            <p className="text-[11px] text-stone-500 truncate mt-0.5">
+              {participant.pangkalan} · {participant.kwarran}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={onOpenLoginModal}
+          className="text-xs font-semibold text-amber-800 hover:text-amber-950 underline shrink-0 cursor-pointer"
+        >
+          Ganti Peserta
+        </button>
+      </div>
+
       {/* Quiz Top Action Bar */}
       <div className="bg-white rounded-2xl p-4 border border-stone-200/80 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-4">
         {/* Left: Mode toggle */}

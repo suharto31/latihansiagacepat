@@ -64,6 +64,15 @@ export interface UserAnswer {
   isFlagged?: boolean;
 }
 
+export interface Participant {
+  nama: string;
+  barung: string;
+  warnaBarung: string;
+  pangkalan: string;
+  kwarran: string;
+  noPeserta?: string;
+}
+
 export interface QuizSessionResult {
   id: string;
   packageId: string;
@@ -77,6 +86,7 @@ export interface QuizSessionResult {
   score: number; // 0 to 100
   answers: Record<string, OptionKey>;
   categoryScores: Record<string, { total: number; correct: number; percentage: number }>;
+  participant?: Participant;
 }
 
 export interface KisiKisiItem {

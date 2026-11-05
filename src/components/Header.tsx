@@ -1,5 +1,5 @@
-import React from 'react';
-import { Award, BookOpen, Clock, Settings, Shield, Lock, Unlock } from 'lucide-react';
+import { Award, BookOpen, Clock, Settings, Shield, Lock, Unlock, UserCheck, User } from 'lucide-react';
+import { Participant } from '../types';
 
 export type NavTab = 'quiz' | 'kisikisi' | 'history' | 'admin';
 
@@ -9,6 +9,8 @@ interface HeaderProps {
   activePackageCode?: string;
   isAdminAuthenticated?: boolean;
   onLogoutAdmin?: () => void;
+  participant: Participant | null;
+  onOpenLoginModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,6 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   activePackageCode,
   isAdminAuthenticated = false,
   onLogoutAdmin,
+  participant,
+  onOpenLoginModal,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-900/10 shadow-xs">
@@ -92,33 +96,76 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </nav>
 
-          {/* Zone 3: Primary Action & Logout */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Zone 3: Participant Profile & Admin Mode */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Participant Pill Button */}
+            {participant ? (
+              <button
+                onClick={onOpenLoginModal}
+                className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-amber-50 hover:bg-amber-100/80 text-amber-950 border border-amber-200 transition-all flex items-center gap-2 cursor-pointer shadow-2xs"
+                title="Klik untuk mengubah identitas peserta"
+              >
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{
+                    backgroundColor:
+                      participant.warnaBarung === 'merah'
+                        ? '#ef4444'
+                        : participant.warnaBarung === 'kuning'
+                        ? '#eab308'
+                        : participant.warnaBarung === 'biru'
+                        ? '#3b82f6'
+                        : participant.warnaBarung === 'cokelat'
+                        ? '#854d0e'
+                        : participant.warnaBarung === 'putih'
+                        ? '#cbd5e1'
+                        : participant.warnaBarung === 'hitam'
+                        ? '#1e293b'
+                        : '#22c55e',
+                  }}
+                />
+                <span className="max-w-[120px] sm:max-w-[160px] truncate font-bold text-[11px] sm:text-xs">
+                  {participant.nama}
+                </span>
+                <span className="text-[10px] text-amber-700 bg-amber-200/60 px-1.5 py-0.5 rounded-md font-medium hidden sm:inline">
+                  {participant.barung}
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={onOpenLoginModal}
+                className="px-3 py-1.5 text-xs font-bold rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+              >
+                <UserCheck className="w-3.5 h-3.5" />
+                <span>Login Peserta</span>
+              </button>
+            )}
+
             {isAdminAuthenticated && activeTab === 'admin' ? (
               <button
                 onClick={onLogoutAdmin}
-                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 cursor-pointer flex items-center gap-1"
+                className="px-3 py-1.5 text-xs font-semibold rounded-xl transition-colors whitespace-nowrap shrink-0 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 cursor-pointer flex items-center gap-1"
                 title="Kunci kembali mode admin"
               >
                 <Lock className="w-3.5 h-3.5 text-stone-500" />
-                <span>Kunci Admin</span>
+                <span className="hidden sm:inline">Kunci</span>
               </button>
             ) : null}
 
             <button
               onClick={() => onSelectTab(activeTab === 'admin' ? 'quiz' : 'admin')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl transition-colors whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'admin'
                   ? 'bg-amber-800 text-white hover:bg-amber-900 shadow-xs'
-                  : 'bg-stone-900 text-stone-100 hover:bg-stone-800 shadow-xs'
+                  : 'bg-stone-800 text-stone-100 hover:bg-stone-900 shadow-xs'
               }`}
             >
               {activeTab === 'admin' ? (
-                'Kembali ke Soal'
+                'Kembali'
               ) : (
                 <>
                   <Lock className="w-3 h-3 text-stone-400" />
-                  <span>Mode Admin</span>
+                  <span className="hidden sm:inline">Mode Admin</span>
                 </>
               )}
             </button>

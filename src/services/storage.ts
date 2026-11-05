@@ -1,15 +1,31 @@
-import { QuizPackage, QuizSessionResult, Question, OptionKey } from '../types';
+import { QuizPackage, QuizSessionResult, Question, OptionKey, Participant } from '../types';
 import { DEFAULT_PACKAGES } from '../data/defaultPackages';
 import { KWARCAB_KENDAL_KISIKISI } from '../data/kisiKisiData';
 
-const PACKAGES_STORAGE_KEY = 'siaga_cepat_packages_v1';
+const PACKAGES_STORAGE_KEY = 'siaga_cepat_packages_v2';
 const HISTORY_STORAGE_KEY = 'siaga_cepat_history_v1';
+const PARTICIPANT_STORAGE_KEY = 'siaga_cepat_participant_v1';
 
 export const storageService = {
   getPackages(): QuizPackage[] {
     try {
       const data = localStorage.getItem(PACKAGES_STORAGE_KEY);
       if (!data) {
+        // Check if there are custom packages in v1 to migrate
+        const oldV1 = localStorage.getItem('siaga_cepat_packages_v1');
+        if (oldV1) {
+          try {
+            const parsedOld = JSON.parse(oldV1);
+            if (Array.isArray(parsedOld)) {
+              const customPkgs = parsedOld.filter((p: QuizPackage) => p.isCustom);
+              const combined = [...DEFAULT_PACKAGES, ...customPkgs];
+              localStorage.setItem(PACKAGES_STORAGE_KEY, JSON.stringify(combined));
+              return combined;
+            }
+          } catch {
+            // ignore
+          }
+        }
         localStorage.setItem(PACKAGES_STORAGE_KEY, JSON.stringify(DEFAULT_PACKAGES));
         return DEFAULT_PACKAGES;
       }
@@ -158,6 +174,36 @@ export const storageService = {
       return { success: true, count: pkgs.length };
     } catch (err) {
       return { success: false, error: 'Gagal membaca format JSON: ' + (err as Error).message };
+    }
+  },
+
+  // Participant login session management
+  getParticipant(): Participant | null {
+    try {
+      const data = localStorage.getItem(PARTICIPANT_STORAGE_KEY) || sessionStorage.getItem(PARTICIPANT_STORAGE_KEY);
+      if (!data) return null;
+      return JSON.parse(data) as Participant;
+    } catch {
+      return null;
+    }
+  },
+
+  saveParticipant(participant: Participant): void {
+    try {
+      const serialized = JSON.stringify(participant);
+      localStorage.setItem(PARTICIPANT_STORAGE_KEY, serialized);
+      sessionStorage.setItem(PARTICIPANT_STORAGE_KEY, serialized);
+    } catch (err) {
+      console.error('Error saving participant:', err);
+    }
+  },
+
+  clearParticipant(): void {
+    try {
+      localStorage.removeItem(PARTICIPANT_STORAGE_KEY);
+      sessionStorage.removeItem(PARTICIPANT_STORAGE_KEY);
+    } catch (err) {
+      console.error('Error clearing participant:', err);
     }
   }
 };

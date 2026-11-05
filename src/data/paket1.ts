@@ -109,15 +109,15 @@ export const paket1Questions: Question[] = [
     elemen: 'PUK Siaga',
     materi: 'Hari Pramuka',
     indikator: 'Disajikan deskripsi tentang peringatan hari pramuka tahun 2026. Dapat mengetahui tema hari pramuka tahun 2026.',
-    soal: 'Pada tanggal 14 Agustus 2026 mendatang, Gerakan Pramuka di seluruh penjuru tanah air memperingati Hari Pramuka yang ke-...',
+    soal: 'Tema resmi peringatan Hari Pramuka ke-65 pada tanggal 14 Agustus tahun 2026 yang ditetapkan oleh Kwartir Nasional Gerakan Pramuka adalah...',
     pilihan: {
-      A: '61 Tahun',
-      B: '63 Tahun',
-      C: '65 Tahun',
-      D: '70 Tahun'
+      A: 'Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju Indonesia Emas 2045',
+      B: 'Pramuka Berjiwa Pancasila Menjaga Keutuhan Negara Kesatuan Republik Indonesia',
+      C: 'Membangun Karakter Generasi Muda Ceria, Berprestasi, dan Berbudi Luhur',
+      D: 'Satu Pramuka untuk Satu Indonesia Tangguh, Berdaya Saing, dan Mandiri'
     },
-    kunci: 'C',
-    pembahasan: 'Sejak didirikan pada tahun 1961, peringatan Hari Pramuka pada tahun 2026 adalah yang ke-65 tahun (2026 - 1961 = 65 tahun).',
+    kunci: 'A',
+    pembahasan: 'Tema resmi peringatan Hari Pramuka ke-65 tahun 2026 adalah "Memantapkan Langkah Organisasi Mendukung Swasembada Pangan Menuju Indonesia Emas 2045". Tema ini menegaskan komitmen Gerakan Pramuka dalam penguatan organisasi dan ketahanan pangan nasional.',
     visualBadge: 'none'
   },
   {

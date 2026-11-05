@@ -122,7 +122,23 @@ export const ResultView: React.FC<ResultViewProps> = ({
               <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight">
                 Hasil Koreksi: {result.packageTitle}
               </h1>
-              <p className="text-sm text-stone-600 mt-1 max-w-xl">
+
+              {/* Participant Identity Badge */}
+              {result.participant && (
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-2">
+                  <span className="text-xs font-bold text-stone-900 bg-amber-100/80 px-2.5 py-1 rounded-lg border border-amber-200">
+                    👤 {result.participant.nama}
+                  </span>
+                  <span className="text-xs font-bold text-amber-900 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
+                    {result.participant.barung}
+                  </span>
+                  <span className="text-xs text-stone-600 font-medium">
+                    {result.participant.pangkalan} ({result.participant.kwarran})
+                  </span>
+                </div>
+              )}
+
+              <p className="text-sm text-stone-600 mt-2 max-w-xl">
                 {predikatPesan}
               </p>
 

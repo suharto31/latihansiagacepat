@@ -8,9 +8,10 @@ import { KisiKisiView } from './components/KisiKisiView';
 import { HistoryView } from './components/HistoryView';
 import { GeneratePackageModal } from './components/GeneratePackageModal';
 import { AdminAuthModal } from './components/AdminAuthModal';
+import { ParticipantLoginModal } from './components/ParticipantLoginModal';
 import { storageService } from './services/storage';
 import { DEFAULT_PACKAGES } from './data/defaultPackages';
-import { QuizPackage, QuizSessionResult } from './types';
+import { QuizPackage, QuizSessionResult, Participant } from './types';
 import { HelpCircle, CheckCircle2, Github, ExternalLink, X } from 'lucide-react';
 
 export default function App() {
@@ -52,7 +53,22 @@ export default function App() {
       return false;
     }
   });
+
+  const [participant, setParticipant] = useState<Participant | null>(() => {
+    try {
+      return storageService.getParticipant();
+    } catch {
+      return null;
+    }
+  });
+  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [showGithubHelpModal, setShowGithubHelpModal] = useState(false);
+
+  const handleLoginParticipant = (newParticipant: Participant) => {
+    storageService.saveParticipant(newParticipant);
+    setParticipant(newParticipant);
+    setIsParticipantModalOpen(false);
+  };
 
   // Sync to ensure active package exists
   const activePackage =
@@ -210,6 +226,8 @@ export default function App() {
         activePackageCode={activePackage?.code}
         isAdminAuthenticated={isAdminAuthenticated}
         onLogoutAdmin={handleLogoutAdmin}
+        participant={participant}
+        onOpenLoginModal={() => setIsParticipantModalOpen(true)}
       />
 
       {/* Package Navigator visible in Quiz & Admin tabs */}
@@ -245,6 +263,8 @@ export default function App() {
                 quizPackage={activePackage}
                 onFinishQuiz={handleFinishQuiz}
                 onSwitchPackage={() => setActiveTab('quiz')}
+                participant={participant}
+                onOpenLoginModal={() => setIsParticipantModalOpen(true)}
               />
             )}
           </>
@@ -294,6 +314,14 @@ export default function App() {
         onClose={() => setIsGenerateModalOpen(false)}
         nextPackageNumber={packages.length + 1}
         onPackageGenerated={handlePackageGenerated}
+      />
+
+      {/* Participant Login Modal */}
+      <ParticipantLoginModal
+        isOpen={isParticipantModalOpen}
+        currentParticipant={participant}
+        onClose={() => setIsParticipantModalOpen(false)}
+        onLogin={handleLoginParticipant}
       />
 
       {/* GitHub Pages Setup Guide Modal */}

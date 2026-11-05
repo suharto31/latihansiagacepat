@@ -135,7 +135,14 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                     </div>
 
                     <div>
-                      <h3 className="text-sm font-bold text-stone-900">{item.packageTitle}</h3>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-stone-900">{item.packageTitle}</h3>
+                        {item.participant && (
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-200">
+                            {item.participant.nama} ({item.participant.barung})
+                          </span>
+                        )}
+                      </div>
                       <div className="flex flex-wrap items-center gap-2 text-xs text-stone-500 mt-1">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3.5 h-3.5 text-stone-400" />
